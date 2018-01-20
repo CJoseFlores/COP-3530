@@ -1,16 +1,25 @@
 /*******************************************************************************
  * Purpose/Description: Searches through an array who first strictly increases
-                        and then decreases for an integer value.
+                        and then decreases for an integer value. For simplicity,
+                        I have limited the size of the array to be from 10 to 30
+                        elements, and it only increases or decreases by 1 to 9 on
+                        each step. I have done this because the focus of the program
+                        is on the actual search, not the array itself.
  * Author's Panther ID: 5160328
  * Certification:
     I hereby certify that this work is my own and none of it is the work of any
     other person.
  * QUESTION (b): The time complexity of my search algorithm is O(n).
+ * Please refer to the "findInt" static method to view the algorithm.
  * It involves 1 while loop which ends when the array element is found or the
- * end of the array is reached.
+ * end of the array is reached (array is size n).
  * In the best case, the integer is found in array index "0".
  * In the worst case, the integer is either found at index "n-1" or not found
- * at all.
+ * at all, i.e. the complexity of the while loop is "n".
+ * The if statement is insignificant, since it does not depend on the input size,
+ * and therefore has a constant complexity.
+ * T(n) = n + c, where "n" is the complexity of the while loop, and "c" of the if statement
+ * as n -> infinity.
  * Therefore, T(n) belongs to O(n).
 *******************************************************************************/
 
@@ -19,11 +28,10 @@ import java.util.Random;
 import javax.swing.JOptionPane;
 
 public class ProblemOne {
-
-    /**
-     * @param args the command line arguments
-     */
     
+    // <--------------------------------------------------------------->
+    // <-------THIS IS THE METHOD THAT IMPLEMENTS THE ALGORITHM!------->
+    // <--------------------------------------------------------------->
     // Returns the index of the element if it is found, else -1.
     private static int findInt(int [] a, int intToFind)
     {
@@ -48,6 +56,9 @@ public class ProblemOne {
         return -1;
     }
     
+    /**
+     * @param args the command line arguments
+     */
     public static void main(String[] args) {
         
         int [] a; // Array that will strictly increase and strictly decrease.
@@ -63,8 +74,8 @@ public class ProblemOne {
         Random rand = new Random(); // Random generator.
         
         //<--------------------------------------------------------->
-        //<---------LINES 69 - 105 SIMPLY GENERATE THE ARRAY--------->
-        //<--------------PLEASE SKIP TO BELOW LINE 109:-------------->
+        //<---------LINES 80 - 115 SIMPLY GENERATE THE ARRAY--------->
+        //<--------------PLEASE SKIP TO BELOW LINE 120:-------------->
         //<--------------------------------------------------------->
         
         n = rand.nextInt(maxSize - minSize + 1) + minSize;
