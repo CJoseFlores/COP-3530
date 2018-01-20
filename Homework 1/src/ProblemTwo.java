@@ -17,6 +17,8 @@
  * depend on the input size "n".
  * Therefore, T(n) = n + c, where "n" is the size of the array, and "c" is the 
  * cost of initializations, and return statements, so T(n) is O(n).
+ * Please not for T(n), I did not include the actual constant values that scale "n" as they
+ * are insignificant as n -> infinity.
 *******************************************************************************/
 import java.util.Random;
 import java.util.Arrays;

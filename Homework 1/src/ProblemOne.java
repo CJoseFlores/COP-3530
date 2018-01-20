@@ -21,6 +21,8 @@
  * T(n) = n + c, where "n" is the complexity of the while loop, and "c" of the if statement
  * as n -> infinity.
  * Therefore, T(n) belongs to O(n).
+ * Please not for T(n), I did not include the actual constant values that scale "n" as they
+ * are insignificant as n -> infinity.
 *******************************************************************************/
 
 
