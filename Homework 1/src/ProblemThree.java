@@ -24,7 +24,7 @@
  * both simply use constant complexity of O(1) since it does not depend on the size.
  * Therefore, the time complexity of the algorithm I implemented is O(log n).
  * References: http://www.cs.utexas.edu/users/EWD/ewd06xx/EWD654.PDF
- * This reference was used to implement the fibonacci number sequence in sub-linear time.
+ * This reference contains the derived equations used in the algorithm.
 *******************************************************************************/
 import java.math.BigInteger;
 
