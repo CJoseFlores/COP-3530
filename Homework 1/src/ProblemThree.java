@@ -16,13 +16,20 @@
  * equation, which results in the following new equations:
  * For even n: F(n) = (2F((n/2) -1) + F(n/2)) * F(n/2)
  * For odd n: F(n) = F((n+1)/2)^2 + F(((n+1)/2) - 1)^2
- * We can see that for every iteration, we are dividing the size by two.
+ * We can see that for every iteration, we are dividing the size by two by plugging in
+ * either "n/2" or "(n+1)/2" in F(n).
  * I.e., for every recursive method call, we are reducing the size by two,
  * which according to the logarithm general rule, since we are halving the input
  * size on every recursive call, we end up with complexity O(log n). There are also
  * two trivial cases when n is 1 or 2, f(n) = 1, and when n is 0, f(n) = 0, which
  * both simply use constant complexity of O(1) since it does not depend on the size.
  * Therefore, the time complexity of the algorithm I implemented is O(log n).
+ * Please note that "BigInteger" was REQUIRED to return fib(250), because the 
+ * primitive data types "int" and "long" cannot hold a number that large.
+ * Java also does not support unsigned long, so do only primitive type that can
+ * hold it is a "double". Instead of using a double, I used the "BigInteger"
+ * wrapper class that dynamically allocates memory to hold an undefined
+ * large number.
  * References: http://www.cs.utexas.edu/users/EWD/ewd06xx/EWD654.PDF
  * This reference contains the derived equations used in the algorithm.
 *******************************************************************************/
