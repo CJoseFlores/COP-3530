@@ -19,20 +19,26 @@ public class ProblemTwo {
         LinkedList<Integer> listTwo = new LinkedList();
         LinkedList<Integer> differenceList = new LinkedList();
         
-        listOne.add(1);
-        listOne.add(2);
-        listOne.add(3);
+        // Fill first list from 0 to 13
+        for(int i=0; i < 14; i++)
+        {
+            listOne.add(i);
+        }
         
-        System.out.println("L1: " + listOne);
+        // Fill second list with [2,5,7,8]
         listTwo.add(2);
         listTwo.add(5);
         listTwo.add(7);
+        listTwo.add(8);
+        
+        System.out.println("L1: " + listOne);
         System.out.println("L2: " + listTwo);
         
         difference(listOne, listTwo, differenceList);
         
         System.out.println("L1 \\ L2: " + differenceList);
         
+        System.out.println("\n\n");
     }
     
     /**
@@ -66,18 +72,21 @@ public class ProblemTwo {
                 // the current itemL1.
                 if(!iterL2.hasNext() || existsInL2)
                 {
+                    // Add item to difference list if it doesn't exist in L2.
+                    if(!existsInL2)
+                    {
+                        Difference.add(itemL1);
+                    }
+                    else
+                    {
+                        existsInL2 = false; // Set flag off.
+                    }
+                    
                     if(iterL1.hasNext())
                     {
                         // If not found in L2, add to the difference, go to next item in L1, 
                         // list, and reset iterL2 to head.
-                        if(!existsInL2)
-                        {
-                            Difference.add(itemL1);
-                        }
-                        else
-                        {
-                            existsInL2 = false; // Set flag off.
-                        }
+                        
                         itemL1 = iterL1.next();
                         iterL2 = L2.listIterator();
                     }
