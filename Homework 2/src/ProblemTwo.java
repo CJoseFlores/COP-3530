@@ -1,9 +1,23 @@
 /*********************************************************************
- Purpose/Description: <a brief description of the program>
+ Purpose/Description: Implements two static functions that find the difference
+ * and intersect, respectively, between lists L1 and L2.
  Author’s Panther ID: 5160328
  Certification:
  I hereby certify that this work is my own and none of it is the work of
  any other person.
+ * Explanation:
+ * 2a) difference() - > Difference is implemented as O(N * M), where "N" is 
+ * the size of "L1" and "M" is the size of "L2". The method iterates through
+ * every L2 element for each L1 element, i.e. both lists are iterated in linear
+ * time, but because L2 is called for each element of L1, then rather than O(N + M), 
+ * the algorithm is O(N * M). NOTE: The collections method "BinarySearch()" was 
+ * not used because the problem stated we could only use the iterators and 
+ * compareTo(). Using "BinarySearch()" reduces the complexity to O(N * log M)
+ * but only for Lists that implement "RandomAccess".
+ * 2b) intersect() - > Intersect is implemented in the same way as difference()
+ * except, where every element of L2 is iterated for every element of L1, therefore
+ * once again O(N * M), and BinarySearch() was not used for the same reason.
+ * Sources: https://docs.oracle.com/javase/7/docs/api/java/util/Collections.html#binarySearch(java.util.List,%20T)
  ********************************************************************/ 
 import java.util.*;
 /**
@@ -18,12 +32,15 @@ public class ProblemTwo {
         LinkedList<Integer> listOne = new LinkedList();
         LinkedList<Integer> listTwo = new LinkedList();
         LinkedList<Integer> differenceList = new LinkedList();
+        LinkedList<Integer> intersectList = new LinkedList();
         
         // Fill first list from 0 to 13
         for(int i=0; i < 14; i++)
         {
             listOne.add(i);
         }
+        
+        //<-----------Difference Test------------>
         
         // Fill second list with [2,5,7,8]
         listTwo.add(2);
@@ -36,9 +53,15 @@ public class ProblemTwo {
         
         difference(listOne, listTwo, differenceList);
         
-        System.out.println("L1 \\ L2: " + differenceList);
+        System.out.println("L1 \\ L2: " + differenceList + "\n\n");
         
-        System.out.println("\n\n");
+        //<-----------Intersect Test------------>
+        listTwo.add(12);
+        System.out.println("L1: " + listOne);
+        System.out.println("L2: " + listTwo);
+        intersection(listOne, listTwo, intersectList);
+        System.out.println("L1 n L2 : " + intersectList);
+        
     }
     
     /**
@@ -123,14 +146,52 @@ public class ProblemTwo {
         AnyType itemL1;
         AnyType itemL2;
         
+        boolean itemInBoth = false; // Flag to check if the item is in L1 and L2.
+        
         ListIterator<AnyType> iterL1 = L1.listIterator();
         ListIterator<AnyType> iterL2 = L2.listIterator();
         if ( iterL1.hasNext() && iterL2.hasNext() )
         {
             itemL1 = iterL1.next();
             itemL2 = iterL2.next();
-        }
-        // YOUR CODE GOES HERE 
+            
+            // YOUR CODE GOES HERE 
+            
+            //Continue to iterate until every element of L1 has been compared
+            //to L2.
+            while(itemL1 != null)
+            {
+                // Add itemL1 if it is also in L2.
+                if(itemL1.compareTo(itemL2) == 0)
+                {
+                    Intersect.add(itemL1);
+                    itemInBoth = true;
+                }
+                // If there are more items in L2 and itemL1 & itemL2 have not been
+                // found in both lists yet, iterate to next item in L2.
+                if(iterL2.hasNext() && !itemInBoth)
+                {
+                    itemL2 = iterL2.next();
+                }
+                // Otherwise, move to the next item in L1, and reset to first
+                // element in L2.
+                else
+                {
+                    itemInBoth = false;
+                    iterL2 = L2.listIterator();
+                    if(iterL1.hasNext())
+                    {
+                        itemL1 = iterL1.next();
+                    }
+                    else
+                    {
+                        // If no more items in L1, point itemL1 to null and end
+                        // the loop.
+                        itemL1 = null;
+                    }
+                }
+
+            }
+        }    
     }
-    
 }
