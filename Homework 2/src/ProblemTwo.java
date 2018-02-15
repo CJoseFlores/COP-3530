@@ -6,17 +6,7 @@
  I hereby certify that this work is my own and none of it is the work of
  any other person.
  * Explanation:
- * 2a) difference() - > Difference is implemented as O(N * M), where "N" is 
- * the size of "L1" and "M" is the size of "L2". The method iterates through
- * every L2 element for each L1 element, i.e. both lists are iterated in linear
- * time, but because L2 is called for each element of L1, then rather than O(N + M), 
- * the algorithm is O(N * M). NOTE: The collections method "BinarySearch()" was 
- * not used because the problem stated we could only use the iterators and 
- * compareTo(). Using "BinarySearch()" reduces the complexity to O(N * log M)
- * but only for Lists that implement "RandomAccess".
- * 2b) intersect() - > Intersect is implemented in the same way as difference()
- * except, where every element of L2 is iterated for every element of L1, therefore
- * once again O(N * M), and BinarySearch() was not used for the same reason.
+ * 2a) difference() - > 
  * Sources: https://docs.oracle.com/javase/7/docs/api/java/util/Collections.html#binarySearch(java.util.List,%20T)
  ********************************************************************/ 
 import java.util.*;
@@ -35,7 +25,7 @@ public class ProblemTwo {
         LinkedList<Integer> intersectList = new LinkedList();
         
         // Fill first list from 0 to 13
-        for(int i=0; i < 14; i++)
+        for(int i=0; i < 7; i++)
         {
             listOne.add(i);
         }
@@ -78,56 +68,52 @@ public class ProblemTwo {
         AnyType itemL1;
         AnyType itemL2;
         
-        // Flag used to check if an L1 item exists in L2.
-        boolean existsInL2 = false;
-        
         ListIterator<AnyType> iterL1 = L1.listIterator();
         ListIterator<AnyType> iterL2 = L2.listIterator();
+        
         if ( iterL1.hasNext() && iterL2.hasNext() )
         {
             itemL1 = iterL1.next();
             itemL2 = iterL2.next();
             
             // YOUR CODE GOES HERE 
-            while ( itemL1 != null ) {
-                
-                // Increment iterL1 if the L2 binary search was completed for
-                // the current itemL1.
-                if(!iterL2.hasNext() || existsInL2)
+            // Continue to iterate as long as 
+            while (iterL1.hasNext()) {
+                // If there are still items in L1, but not L2, then all the items
+                // left in L1 should be in the difference.
+                if(!iterL2.hasNext())
                 {
-                    // Add item to difference list if it doesn't exist in L2.
-                    if(!existsInL2)
+                    // Only add item to difference if not equal to last L2 item.
+                    if(itemL1.compareTo(itemL2) != 0)
                     {
                         Difference.add(itemL1);
                     }
-                    else
-                    {
-                        existsInL2 = false; // Set flag off.
-                    }
-                    
-                    if(iterL1.hasNext())
-                    {
-                        // If not found in L2, add to the difference, go to next item in L1, 
-                        // list, and reset iterL2 to head.
-                        
-                        itemL1 = iterL1.next();
-                        iterL2 = L2.listIterator();
-                    }
-                    else
-                    {
-                        itemL1 = null;
-                    }
+                    itemL1 = iterL1.next();
                 }
-                // There are more elements in L2
-                else
+                // If itemL1 < itemL2, then itemL1 is not in L2, so add to the 
+                // difference, and increment only L1.
+                else if(itemL1.compareTo(itemL2) < 0)
+                {
+                    Difference.add(itemL1);
+                    itemL1 = iterL1.next();
+                }
+                // If itemL1 > itemL2, then simply iterate L2 and don't add it
+                // to the difference.
+                else if (itemL1.compareTo(itemL2) > 0)
                 {
                     itemL2 = iterL2.next();
-                    if(itemL1.compareTo(itemL2) == 0)
-                    {
-                        existsInL2 = true;
-                    }
                 }
-            }   
+                // Otherwise the item is in both L1 & L2, so do not add it to the
+                // difference, only 
+                else
+                {
+                    itemL1 = iterL1.next();
+                    itemL2 = iterL2.next();
+                }
+            }
+            
+            // Add the last element in L1 
+            Difference.add(itemL1);
         }
     }
         
