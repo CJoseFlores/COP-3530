@@ -47,28 +47,27 @@ public class ProblemThree {
         }
         
         // Helper method used to insert the node.
-        private BinarySearchTreeNode insertNode(BinarySearchTreeNode root, int key)
+        private BinarySearchTreeNode insertNode(BinarySearchTreeNode node, int key)
         {
-            
             // Create a new node when it is pointing to nothing.
-            if(root == null)
+            if(node == null)
             {
                 BinarySearchTreeNode newNode = new BinarySearchTreeNode();
                 newNode.key = key;
                 return newNode;
             }
             // Insert a node to the right if the key > root's key.
-            else if(key > root.key)
+            else if(key > node.key)
             {
-                root.right = insertNode(root.right, key);
+                node.right = insertNode(node.right, key);
             }
             // insert a node to the left if the key < root's key.
-            else if (key < root.key)
+            else if (key < node.key)
             {
-                root.left = insertNode(root.left, key);
+                node.left = insertNode(node.left, key);
             }
             
-            return root;
+            return node;
             
         }
         
@@ -77,9 +76,39 @@ public class ProblemThree {
             
         }
         
+        /**
+         * Searches to see if a key exists in the BST.
+         * @param key The value to check if it exists in the BST.
+         * @return True if the key is in the BST, or false if not.
+         */
         public boolean find(int key)
         {
-            return true;
+            return findNode(root, key);
+        }
+        
+        // Private method used to find the node.
+        private boolean findNode(BinarySearchTreeNode node, int key)
+        {
+            // If the root is null, it is imposible to have found it here.
+            if(node == null)
+            {
+                return false; 
+            }
+            // The key is found on the current node, then it was found.
+            else if (key == node.key)
+            {
+                return true;
+            }
+            // Check the right node if the key > the node's key.
+            else if(key > node.key)
+            {
+                return findNode(node.right, key);
+            }
+            // Otherwise, key < node's key, so check the left node.
+            else 
+            {
+                return findNode(node.left, key);
+            }
         }
         
     }
@@ -100,7 +129,8 @@ public class ProblemThree {
         testBST.insert(21);
         testBST.insert(20);
         
-        System.out.println("Test");
+        System.out.println("Find 11: " + testBST.find(11));
+        System.out.println("Find 20: " + testBST.find(20));
         
 
     }
