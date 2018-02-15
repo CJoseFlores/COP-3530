@@ -145,39 +145,45 @@ public class ProblemTwo {
             
             //Continue to iterate until every element of L1 has been compared
             //to L2.
-            while(itemL1 != null)
+            while(iterL1.hasNext())
             {
-                // Add itemL1 if it is also in L2.
-                if(itemL1.compareTo(itemL2) == 0)
+                if(!iterL2.hasNext())
+                {
+                    // Check if last item on L2 is equal to current in L1.
+                    if(itemL1.compareTo(itemL2) == 0)
+                    {
+                        Intersect.add(itemL1);
+                    }
+                    itemL1 = iterL1.next();
+                }
+                // If both items are equal, iterate to next item and add to 
+                // intersect.
+                else if(itemL1.compareTo(itemL2) == 0)
                 {
                     Intersect.add(itemL1);
-                    itemInBoth = true;
+                    itemL1 = iterL1.next();
+                    itemL2 = iterL2.next();
                 }
-                // If there are more items in L2 and itemL1 & itemL2 have not been
-                // found in both lists yet, iterate to next item in L2.
-                if(iterL2.hasNext() && !itemInBoth)
+                // If itemL1 < itemL2, then simply iterate L1.
+                else if(itemL1.compareTo(itemL2) < 0)
+                {
+                    itemL1 = iterL1.next();
+                }
+                // If itemL1 > itemL2, then iterate L2.
+                else if (itemL1.compareTo(itemL2) > 0)
                 {
                     itemL2 = iterL2.next();
                 }
-                // Otherwise, move to the next item in L1, and reset to first
-                // element in L2.
-                else
-                {
-                    itemInBoth = false;
-                    iterL2 = L2.listIterator();
-                    if(iterL1.hasNext())
-                    {
-                        itemL1 = iterL1.next();
-                    }
-                    else
-                    {
-                        // If no more items in L1, point itemL1 to null and end
-                        // the loop.
-                        itemL1 = null;
-                    }
-                }
 
             }
+            
+            // Check if last element in L1 is equal to last element in L2, then
+            //add to intersection.
+            if (itemL1.compareTo(itemL2) == 0)
+            {
+                Intersect.add(itemL1);
+            }
+                
         }    
     }
 }
