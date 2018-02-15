@@ -111,6 +111,38 @@ public class ProblemThree {
             }
         }
         
+        /**
+         * Calculates the sum of all the nodes in the tree.
+         * @return The sum of all nodes in the tree.
+         */
+        public int keySum()
+        {
+            return keySumNode(root);
+        }
+        
+        // Private method that assists to calculate the sum of all the nodes.
+        private int keySumNode(BinarySearchTreeNode node)
+        {
+            int sum;
+            
+            // If the node is null, there is no key to add to the sum.
+            if(node == null)
+            {
+                sum = 0;
+            }
+            // If the key is not null, add the key to sum, and add the sum
+            // of the left and right branch.
+            else
+            {
+                sum = node.key;
+                sum += keySumNode(node.left);
+                sum += keySumNode(node.right);
+            }
+            
+            return sum;
+        }
+        
+        
     }
     
     /**
@@ -131,6 +163,7 @@ public class ProblemThree {
         
         System.out.println("Find 11: " + testBST.find(11));
         System.out.println("Find 20: " + testBST.find(20));
+        System.out.println("The sum of the whole tree is: " + testBST.keySum());
         
 
     }
