@@ -142,6 +142,39 @@ public class ProblemThree {
             return sum;
         }
         
+        /**
+         * Prints the tree in post order traversal.
+         */
+        public void printPostOrder()
+        {
+            System.out.print("The tree has the following elements: [ ");
+            printPostOrderNodes(root);
+            System.out.println("]");
+        }
+        
+        // Helper method used to print the nodes in post order.
+        private void printPostOrderNodes(BinarySearchTreeNode node)
+        {
+            if(node == null)
+            {
+                //Do nothing
+            }
+            // If both childs one of childs is not null, then it is not a leaf so print value and
+            // traverse to the left child, then eventually to the right child.
+            else if(node.left != null || node.right != null)
+            {
+                printPostOrderNodes(node.left);
+                printPostOrderNodes(node.right);
+                System.out.print(node.key + " ");
+            }
+            // If the left & right childs are null, you are at a leaf, so simply
+            // print it.
+            else 
+            {
+                System.out.print(node.key + " ");
+            }
+        }
+        
         
     }
     
@@ -154,16 +187,17 @@ public class ProblemThree {
         // Used to create an instance of the BST inner class.
         ProblemThree.BinarySearchTree testBST = driver.new BinarySearchTree();
         
-        testBST.insert(20);
-        testBST.insert(5);
+        testBST.insert(4);
+        testBST.insert(2);
+        testBST.insert(1);
         testBST.insert(3);
-        testBST.insert(7);
-        testBST.insert(21);
-        testBST.insert(20);
+        testBST.insert(5);
         
         System.out.println("Find 11: " + testBST.find(11));
         System.out.println("Find 20: " + testBST.find(20));
         System.out.println("The sum of the whole tree is: " + testBST.keySum());
+        
+        testBST.printPostOrder();
         
 
     }
