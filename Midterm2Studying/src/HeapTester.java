@@ -5,11 +5,6 @@
  */
 import Heap.Heap;
 
-
-/**
- *
- * @author carlos
- */
 public class HeapTester {
 
     /**
@@ -28,6 +23,8 @@ public class HeapTester {
         System.out.println(test);
         
         test.insert(6);
+        System.out.println(test);
+        test.delMin();
         System.out.println(test);
         
     }
