@@ -104,7 +104,7 @@ public class Heap {
         // If the heap is empty, return 0.
         if(currentSize == 0)
         {
-            return 0; 
+            return 0; // Return nothing because there is nothing in the list.
         }
         // If the heap has 1 element, delete it and return it.
         else if(currentSize == 1)
@@ -179,6 +179,7 @@ public class Heap {
         
         return minValue;
     }
+    
     /**
      * Return the heap represented as a string in array form.
      * @return The heap as a string in array form.

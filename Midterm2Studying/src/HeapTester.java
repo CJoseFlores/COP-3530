@@ -24,8 +24,8 @@ public class HeapTester {
         
         test.insert(6);
         System.out.println(test);
-        test.delMin();
-        System.out.println(test);
+        //test.delMin();
+        //System.out.println(test);
         
     }
     
