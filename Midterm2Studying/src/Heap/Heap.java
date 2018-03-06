@@ -56,6 +56,7 @@ public class Heap {
         percolateUp(currentSize);
     }
     
+    // Used to percolateUp if heap rule is not met after insertion.
     private void percolateUp(int currentIndex)
     {
         int parentIndex, tmp;
@@ -90,9 +91,6 @@ public class Heap {
     {
         int minValue; // Used to hold the minimum value to return.
         int tmp; // Used for swapping values.
-        int currentIndex; // Keep track of node that will percolate down.
-        int leftChild, rightChild; // Store values for left and right child.
-        boolean isHeapRuleMet = false; // Check if the heap rule is met to stop swapping.
         
         // If the heap is empty, return 0.
         if(currentSize == 0)
@@ -111,66 +109,70 @@ public class Heap {
         // Store min value, and swap with right-most leaf (at lowest depth).
         minValue = heap[1];
         heap[1] = heap[currentSize];
+        heap[currentSize] = minValue;
         
         // Delete the last element.
         heap[currentSize] = 0; 
         currentSize--;
         
-        currentIndex = 1;
+        // Swap if needed until the heap rule is met.        
+        percolateDown(1); // Start at root when percolating down.
+
+        return minValue;
+    }
+    
+    private void percolateDown(int currentIndex)
+    {
+        int lChildIndex, rChildIndex, tmp;
         
-        // Swap if needed until the heap rule is met.
-        while(!isHeapRuleMet)
+        // Grab indicies for both children.
+        lChildIndex = currentIndex * 2;
+        rChildIndex = (currentIndex * 2) + 1;       
+        // Continue to percolate down until at leaf, or heap rule is met.
+        while(heap[lChildIndex] > 0)
         {
-            
-            // If the children are out of bounds, we are at the end of 
-            // the heap, so the rule is met.
-            if((currentIndex * 2 > heap.length - 1) || ((currentIndex * 2) + 1) > heap.length - 1)
+            // Possibly swap with rChild if rChild is smaller than lChild.
+            if(heap[rChildIndex] < heap[lChildIndex])
             {
-                break;
-            }
-             
-            // Grab value of left and right child.
-            leftChild = heap[currentIndex * 2];
-            rightChild = heap[(currentIndex * 2) + 1];
-            
-            // Check which child is bigger, then swap if needed.
-            if(leftChild < rightChild)
-            {
-                // Percolate down if current element > leftChild.
-                if(heap[currentIndex] > leftChild)
+                // Swap with rChild if it is less than currentIndex, and non-empty,
+                // Otherwise heap rule is met, and break.
+                if(heap[rChildIndex] < heap[currentIndex]
+                        && heap[rChildIndex] > 0)
                 {
-                    tmp = heap[currentIndex];
-                    heap[currentIndex] = leftChild;
-                    heap[currentIndex * 2] = tmp;
-                    currentIndex = currentIndex * 2;
+                    // Swap
+                    tmp = heap[rChildIndex];
+                    heap[rChildIndex] = heap[currentIndex];
+                    heap[currentIndex] = tmp;
+                    currentIndex = rChildIndex; // Update index.
                 }
                 else
                 {
-                    isHeapRuleMet = true;
+                    break;
                 }
             }
-            // Right child is larger.
+            // Otherwise, possibly swap with lChild because it is smaller than rChild.
             else
             {
-                // Percolate down if current element > rightChild.
-                if(heap[currentIndex] > rightChild)
+                // Swap if lChild < currentIndex, otherwise heap rule is met
+                // and break.
+                if(heap[lChildIndex] < heap[currentIndex])
                 {
-                    tmp = heap[currentIndex];
-                    heap[currentIndex] = rightChild;
-                    heap[(currentIndex * 2) + 1] = tmp;
-                    currentIndex = (currentIndex * 2) + 1;
+                    // Swap
+                    tmp = heap[lChildIndex];
+                    heap[lChildIndex] = heap[currentIndex];
+                    heap[currentIndex] = tmp;
+                    currentIndex = lChildIndex; // Update index.
                 }
                 else
                 {
-                    isHeapRuleMet = true;
+                    break;
                 }
             }
+            
+            // Update indicies for children.
+            lChildIndex = currentIndex * 2;
+            rChildIndex = (currentIndex * 2) + 1;
         }
-        
-        
-        
-        
-        return minValue;
     }
     
     /**
