@@ -38,10 +38,6 @@ public class Heap {
      */
     public void insert(int data)
     {
-        boolean isHeapRuleMet = false; // Checks if the heap rule has been met.
-        int currentIndex; // Keep track of the index of the new "data" node.
-        int parentIndex; // The index of the parent of the new "data" node.
-        int tmp; // Used to hold a value while swapping.
         
         // Insert data at end of the array, unless full then return.
         if(currentSize == heap.length - 1)
@@ -53,38 +49,35 @@ public class Heap {
         {
             currentSize++;
             heap[currentSize] = data;
-            currentIndex = currentSize;
         }
         
         // Continue to peroclate up until heap rule is met, or the new "data"
         // node is at the root.
-        while(!isHeapRuleMet && currentIndex > 1)
+        percolateUp(currentSize);
+    }
+    
+    private void percolateUp(int currentIndex)
+    {
+        int parentIndex, tmp;
+        
+        // Continue to percolate up until either heap rule met, or at root.
+        while(currentIndex > 1)
         {
-            // Calculate parent index by using the relationship of "i" = parent,
-            // "2i" = left child, and "2i+1" = right child.
-            if(currentIndex % 2 == 0)
-            {
-                parentIndex = currentIndex / 2;
-            }
-            else
-            {
-                parentIndex = (currentIndex - 1) / 2;
-            }
+            // Calculate the parent of the current element.
+            parentIndex = currentIndex / 2;
             
-            // Swap if parent > child.
-            if(heap[parentIndex] > data)
+            // If the parent > child, heap rule not followed, swap.
+            if(heap[parentIndex] > heap[currentIndex])
             {
-                tmp = heap[parentIndex];
-                heap[parentIndex] = data;
-                heap[currentIndex] = tmp;
-                
-                // Update currentIndex to the parent's index since swap was 
-                // performed.
-                currentIndex = parentIndex;
+                // Swap parent and child.
+                tmp = heap[currentIndex];
+                heap[currentIndex] = heap[parentIndex];
+                heap[parentIndex] = tmp;
+                currentIndex = parentIndex; // Update currentIndex.
             }
             else
             {
-                isHeapRuleMet = true;
+                break;
             }
         }
     }
