@@ -5,7 +5,23 @@
  I hereby certify that this work is my own and none of it is the work of
  any other person.
  * Questions:
- * PART (A): PLEASE ANSWER THIS BEFORE YOU FORGET!
+ * PART (A): 
+ * No, for the preorder traversal, the output would not be sorted. Unlike AVLs,
+ * Heaps have no concept of "order", i.e. the Heap Rule does not imply order. 
+ * For example, finding the max in a minHeap would require iterating throughout
+ * the entire heap because it can be in any one of the leafs at the lowest depth,
+ * so if you were to traverse in preorder, you may have already printed the max
+ * before you are done iterating, therefore the output would not be sorted.
+ * Using the same reasoning, the output of both inorder and postorder traversal
+ * would NOT be a sorted output because a heap has no concept of "order".
+ * -> NOTE: A Heap can handle sorted input very well because inserting a sorted
+ *          array is trivial, it will always follow the heap rule. This however
+ *          is not the same as sorted output.
+ * -> NOTE: A Heap CAN print sorted output, but not through normal traversal.
+ *          You must deleteMin() until the heap is empty. This results in a 
+ *          sorted output because percolateDown() will take care of fixing
+ *          the heap rule, and everytime you deleteMin() you are guaranteeing 
+ *          that the next item will be greater than the previous (heap sort).
  * PART (B):
  * The code for this part can be found in the findSmallerNodes() method, in the 
  * "MinHeap" class.
