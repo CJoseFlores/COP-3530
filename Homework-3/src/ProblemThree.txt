@@ -1,5 +1,15 @@
-Background research was required for me to solve this problem.
-Decision Trees are explained in this link: http://www.cs.ubc.ca/~liorma/cpsc320/files/sorting-2x2.pdf
+/*********************************************************************
+ Purpose/Description: Proposes an algorithm for sorting the proposed sequence.
+ Author’s Panther ID: 5160328
+ Certification:
+ I hereby certify that this work is my own and none of it is the work of
+ any other person.
+ QUESTION:
+ * Answered below this header.
+ REFERENCES:
+ * Background research was required for me to solve this problem.
+ * Decision Trees are explained in this link: http://www.cs.ubc.ca/~liorma/cpsc320/files/sorting-2x2.pdf
+ ********************************************************************/ 
 
 Algorithm:
 
