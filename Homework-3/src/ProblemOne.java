@@ -1,11 +1,21 @@
 /*********************************************************************
- Purpose/Description: IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+ Purpose/Description: Answers Heap-Based questions for ProblemOne.
  Author’s Panther ID: 5160328
  Certification:
  I hereby certify that this work is my own and none of it is the work of
  any other person.
  * Questions:
- 
+ * PART (A): PLEASE ANSWER THIS BEFORE YOU FORGET!
+ * PART (B):
+ * The code for this part can be found in the findSmallerNodes() method, in the 
+ * "MinHeap" class.
+ * The code is tested in the main function.
+ * The method findSmallerNodes iterates through the entire array and prints out any items that are
+ * less than the passed parameter x, therefore it is linear time, or O(n).
+ * PART (C):
+ * The code for this part can be found in the replaceKey() method in the 
+ * "MaxHeap" class.
+ * The code is tested in the main function.
  REFERENCES:
  * Note, the code for min/max heap implementation was taken from the following
  * links (since it is assumed we have them available):
@@ -182,6 +192,36 @@ public class ProblemOne {
         public String toString()
         {
             return Arrays.toString(heap);
+        }
+        
+        /**************************************************************************
+        * THE FUNCTION findSmallerNodes BELOW IS USED TO ANSWER PROBLEM 1, PART (B)
+        ***************************************************************************/
+        
+        /**
+         * Finds and prints all the nodes smaller than the passed parameter.
+         * @param x The item to find items that are less than it.
+         * @return The amount of items smaller than x.
+         */
+        public int findSmallerNodes(AnyType x)
+        {
+            int count = 0; // The amount of nodes smaller than count.
+            
+            System.out.print("[ ");
+            
+            // Iterate through the used part of the heap.
+            for(int i=1; i < currentSize + 1; i++)
+            {
+                // Print out the element if it is less than the passed "x" val.
+                if(myCompare(heap[i], x) < 0)
+                {
+                    System.out.print(heap[i] + " ");
+                    count++;
+                }
+            }
+            
+            System.out.println("]");
+            return count;
         }
         
     }
@@ -375,8 +415,14 @@ public class ProblemOne {
     // Test program
     public static void main( String [ ] args )
     {
-        //ProblemOne.MinHeap<Integer> minHeapTest = new ProblemOne().new MinHeap<Integer>( );
+        ProblemOne.MinHeap<Integer> minHeapTest = new ProblemOne().new MinHeap<Integer>( );
         ProblemOne.MaxHeap<Integer> maxHeapTest = new ProblemOne().new MaxHeap<Integer>( );
+        
+        
+        
+        
+        
+        
         
 //        //Inserting heap from board.
 //        minHeapTest.insert(10);
@@ -393,14 +439,34 @@ public class ProblemOne {
 //        minHeapTest.deleteMin();
 //        System.out.println(minHeapTest);
         
+        /***************************************************** 
+        * THE CODE BELOW IS USED TO ANSWER PROBLEM 1, PART (B)
+        *****************************************************/
+        minHeapTest.insert(99);
+        minHeapTest.insert(64);
+        minHeapTest.insert(42);
+        minHeapTest.insert(54);
+        minHeapTest.insert(32);
+        minHeapTest.insert(28);
+        minHeapTest.insert(6);
+        minHeapTest.insert(19);
+        minHeapTest.insert(7);
+        minHeapTest.insert(26);
+        minHeapTest.insert(4);
         
+        System.out.println("--------------------------------------");
+        System.out.println("Problem 1, Part (B):");
+        System.out.println("--------------------------------------");
+        System.out.print("The following is the given heap: ");
+        System.out.println(minHeapTest);
+        System.out.println("Finding all numbers less than 27 in the heap: ");
+        System.out.println("Found " + minHeapTest.findSmallerNodes(27) + " element(s) less than 27.");
         
         
         
         /***************************************************** 
         * THE CODE BELOW IS USED TO ANSWER PROBLEM 1, PART (C)
-        ***************************************************** 
-        */
+        *****************************************************/
         maxHeapTest.insert(99);
         maxHeapTest.insert(64);
         maxHeapTest.insert(42);
@@ -412,6 +478,7 @@ public class ProblemOne {
         maxHeapTest.insert(7);
         maxHeapTest.insert(26);
         maxHeapTest.insert(4);
+        
         System.out.println("--------------------------------------");
         System.out.println("Problem 1, Part (C):");
         System.out.println("--------------------------------------");
