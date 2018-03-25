@@ -1,0 +1,85 @@
+Background research was required for me to solve this problem.
+Decision Trees are explained in this link: http://www.cs.ubc.ca/~liorma/cpsc320/files/sorting-2x2.pdf
+
+Algorithm:
+
+As it turns out, to achieve O(N log K) complexity in sorting the sequence, you 
+can use ANY comparison-based sorting algorithm on each of the sub-sequences 
+including: insertion sort, selection sort, merge sort etc... The proof for this 
+can derived using decision trees, and the fact that once each sub-sequence has 
+been sorted, we are guaranteed to have the rest of the array to be sorted 
+because of the property that "All elements of a subsequence are less than those 
+of the preceding one and greater than those of the following subsequence."
+
+Proof:
+
+A decision tree simply represents every possible sequence of comparisons that a 
+comparison sort may perform.
+
+Consider then, that the height of the decision tree for any comparison sort for 
+the sequence is "h".
+
+-> Note that since there are "k" elements in each sub-sequence, then there are 
+"k!" permutations for each subsequence. Note that the sub-sequences divide the 
+sequence into "n/k" subsequences, meaning that there are actually:
+
+(k!)^n/k permutations of S that correspond to sorting.
+
+Note that the number of leaves in a decision tree are the possible permutations,
+so there are (k!)^n/k leaves in the decision tree.
+
+Now, a property for a binary tree is that for a tree of height "h", it cannot 
+have more than 2^h leaves, so we can form the inequality:
+
+2^h >= (k!)^n/k     
+
+log(2^h) >= log [(k!)^n/k]   // Applying log() to both sides (log base 2).
+h * log(2) >= log [(k!)^n/k]  // Using log() property to move exponent.
+
+Then we have:
+h >= log[(k!)^n/k]  // log(2) = 1
+
+We now have a bound for height, lets work with the right side of the equation.
+
+= (n/k) log(k!)  // Using log() property to move exponent.
+
+>= (n/k) log [(k/2)^k/2]  // 1. ) Explanation for this step below.
+
+-------------------------------------------------------------------
+
+1.) Note that k! = k * (k-1) * (k-2) * (k-3) * .... * 2 * 1
+
+-> Notice that half of the elements in k! are greater than (k/2), so we have a 
+guarantee that the following is true:
+
+// We have ">=" because we deleted the bottom half of the factorial.
+k! >= k * (k-1) * (k-2) * (k-3) * .... (k/2)
+
+Note that all elements above (k/2) such as k, k-1, k-2 are all greater than k/2,
+so we can then make the following conclusion:
+
+k! >= k * (k-1) * (k-2) * (k-3) ... (k/2) >= (k/2) * (k/2) * (k/2) ...
+
+i.e. k! >= (k/2) * (k/2) * (k/2)* ... * (k/2)
+
+Note that this is the product of (k/2) multiplied (k/2) times, since the number 
+of elements above (k/2) was "k/2" elements.
+
+Therefore, we have k! >= (k/2) ^ (k/2)
+-------------------------------------------------------------------
+
+Finally, we have:
+
+= (n/k) * (k/2) log (k/2)  // log() property used to move exponent.
+= (n/2) log (k/2)  
+
+i.e. h >= (n/2) log (k/2)
+
+We therefore have that height is in the order of O(n log k)
+
+Remember that a decision tree represents every sequence of comparisons, so 
+whenever a decision is made, it only traverses one of the branches, so the 
+sorting algorithm will perform "h" decisions.
+
+Therefore since h is O(n log k), and the algorithm makes "h" decisions, then the
+complexity of the algorithm is O(n log k).
