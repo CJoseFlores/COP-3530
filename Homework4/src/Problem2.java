@@ -10,6 +10,27 @@
  * is O(n)) and then it iterates through the array one more time and 
  * overrides the values with 0's or 1's, which is O(n). Therefore the entire
  * algorithm is T(n) = O(n) + O(n), which is simply T(n) = O(n).
+ * Part (B2): The algorithm for my implemented specialRadixSort() is O(d * (r + n))
+ * Starting with the first for loop, I am adding empty buckets to the bucket array,
+ * this operation is O(r) because there are "r" buckets (in this case 10).
+ * The second for loop finds the biggest number of digits in any of the numbers
+ * in the array to sort. This iterates through the whole array of size "n", so
+ * this operation is O(n). The while loop is what actually does the radix sorting.
+ * The while loop will execute "d" times, where "d" is the number of digits
+ * calculated from the previous operation; this is the amount of bucket sorts
+ * that will be performed. Inside the while loop, the first loop performs bucket
+ * sort on one of the digits of each number and is only dependant on the size
+ * of the array, so this operation is O(n). The second for loop inside the while
+ * loop iterates through the array of buckets, and then through each bucket. 
+ * This nested for loop is O(r + n) because it iterates through "r" buckets,
+ * and after the entire iteration, you are guaranteed to have also iterated
+ * through "n" elements because all of the array's elements are located in the
+ * buckets. Our time complexity function then is 
+ * T(n) = O(r) + O(n) + O(d * [O(n) + O(r + n)])
+ * Which simplfies to:
+ * T(n) = O(r) + O(n) + O(d * [O(r + n)])   then,
+ * T(n) = O(r) + O(n) + O(d * (r + n))    and finally, 
+ * T(n) = O(d * (r + n)).
  REFERENCES:
  * Extracting the number of digits from an int in O(1) using Math.log10()
  * http://www.baeldung.com/java-number-of-digits-in-int 
@@ -63,6 +84,11 @@ public class Problem2 {
 
     }
     
+    /**
+     * (Problem 2B) Sorts an array using RadixSort, and also converts any odd 
+     * digits to even.
+     * @param array The Array to sort.
+     */
     public static void specialRadixSort(int [] array)
     {
         ArrayList<Integer>[] buckets = new ArrayList[10]; // Holds the buckets.
@@ -91,8 +117,6 @@ public class Problem2 {
                 maxDigit = digit;
             }
         }
-        
-        System.out.println("Max digit in array: " + maxDigit);
         
         while(numPasses < maxDigit)
         {
@@ -142,6 +166,7 @@ public class Problem2 {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        System.out.println("\nPROBLEM 2A:");
         int [] arrayToSort = {1,0,1,0,0,0,1,0,1,0,0,1};
         System.out.print("The original array is as follows: ");
         System.out.println(Arrays.toString(arrayToSort));
