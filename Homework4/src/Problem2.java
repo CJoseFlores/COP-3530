@@ -102,7 +102,19 @@ public class Problem2 {
                 truncVal = item / digitPlace;
                 binIndex = truncVal % 10;
                 
-                buckets[binIndex].add(item);
+                // If extracted number is odd, subtract by 1 to make it even,
+                // And insert the original "item" number by digitPlace to scale
+                // it.
+                if(binIndex % 2 != 0)
+                {
+                    binIndex--;
+                    buckets[binIndex].add(item - digitPlace);
+                    
+                }
+                else
+                {
+                    buckets[binIndex].add(item);
+                }   
             }
             
             int arrayIndex = 0; // Used to iterate through array.
