@@ -118,6 +118,7 @@ public class Problem2 {
             }
         }
         
+        // Makes "maxDigit" passes to complete the RadixSort.
         while(numPasses < maxDigit)
         {
             // Make a pass through the array looking at the current digitPlace.
