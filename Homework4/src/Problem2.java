@@ -11,8 +11,11 @@
  * overrides the values with 0's or 1's, which is O(n). Therefore the entire
  * algorithm is T(n) = O(n) + O(n), which is simply T(n) = O(n).
  REFERENCES:
+ * Extracting the number of digits from an int in O(1) using Math.log10()
+ * http://www.baeldung.com/java-number-of-digits-in-int 
  ********************************************************************/ 
 import java.util.Arrays;
+import java.util.ArrayList;
 /**
  *
  * @author carlos
@@ -20,7 +23,7 @@ import java.util.Arrays;
 public class Problem2 {
 
     /**
-     * Sorts a binary array in linear time.
+     * Sorts a binary array in linear time. (Problem 2A)
      * @param array The binary array to be sorted.
      */
     public static void linearSort(int [] array)
@@ -59,6 +62,69 @@ public class Problem2 {
         }
 
     }
+    
+    public static void specialRadixSort(int [] array)
+    {
+        ArrayList<Integer>[] buckets = new ArrayList[10]; // Holds the buckets.
+        int digit; // Holds the number of digits in the array element.
+        int binIndex; // The value of the bin that the element should go to.
+        int truncVal; // The value of the element truncated by "digitPlace".
+        
+        int digitPlace = 1; // The current place of the digit.
+        int maxDigit = 0; // Holds the max number of digits in the array.
+        int numPasses = 0; // Number of passes
+        
+        // Insert the buckets to hold items when making the bucket sort passes.
+        for(int i = 0; i < 10; i++)
+        {
+            buckets[i] = new ArrayList();
+        }
+        
+        // Iterating through the array to find the maximum amount of digits.
+        for(int item : array)
+        {
+            // Extract the amount of digits for the item.
+            digit = (int) (Math.log10(item) + 1);
+            
+            if(digit > maxDigit)
+            {
+                maxDigit = digit;
+            }
+        }
+        
+        System.out.println("Max digit in array: " + maxDigit);
+        
+        while(numPasses < maxDigit)
+        {
+            // Make a pass through the array looking at the current digitPlace.
+            for(int item : array)
+            {
+                truncVal = item / digitPlace;
+                binIndex = truncVal % 10;
+                
+                buckets[binIndex].add(item);
+            }
+            
+            int arrayIndex = 0; // Used to iterate through array.
+            
+            // Iterate through buckets and place them back into original array.
+            for(int i=0; i < buckets.length; i++)
+            {
+                for(int j = 0; j < buckets[i].size(); j++)
+                {
+                    array[arrayIndex++] = buckets[i].get(j);
+                }
+                
+                // Clear that bucket of items to get it ready for next pass.
+                buckets[i].clear();
+            }
+            
+            // Move to the next digit place and make another pass if needed.
+            digitPlace = digitPlace * 10; 
+            numPasses++;
+        }
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -72,6 +138,20 @@ public class Problem2 {
         
         System.out.print("The sorted array is as follows: ");
         System.out.println(Arrays.toString(arrayToSort));
+        
+        
+        System.out.println("\nPROBLEM 2B:");
+        int [] otherArrayToSort = {13, 4680, 24062, 51, 86, 642, 51, 426, 888};
+        System.out.print("The input array is as follows: ");
+        System.out.println(Arrays.toString(otherArrayToSort));
+        
+        specialRadixSort(otherArrayToSort);
+        System.out.print("The sorted array is as follows: ");
+        System.out.println(Arrays.toString(otherArrayToSort));
+        
+        
+        
+        
         
         
     }
